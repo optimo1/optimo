@@ -59,6 +59,13 @@ const auth = {
             const confirmPassword = e.target.elements[3].value;
             this.register(name, email, password, confirmPassword);
         });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.add('hidden');
+            }
+        });
     },
 
     // Register new user
@@ -98,8 +105,14 @@ const auth = {
             localStorage.setItem('currentUser', JSON.stringify(user));
             this.updateUIForLoggedInUser();
             document.getElementById('loginModal').classList.add('hidden');
+            document.getElementById('registerModal').classList.add('hidden');
             document.getElementById('dashboard').classList.remove('hidden');
             window.location.hash = '#dashboard';
+            
+            // Update dashboard data
+            if (typeof dashboard !== 'undefined') {
+                dashboard.updateDashboard();
+            }
         } else {
             alert('Invalid email or password');
         }
