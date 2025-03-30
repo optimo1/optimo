@@ -3,7 +3,9 @@ const dashboard = {
     // Initialize dashboard
     init() {
         this.setupEventListeners();
-        this.updateDashboard();
+        if (auth.currentUser) {
+            this.updateDashboard();
+        }
     },
 
     // Setup event listeners for dashboard functionality
@@ -25,10 +27,19 @@ const dashboard = {
             e.preventDefault();
             this.addTransaction();
         });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.add('hidden');
+            }
+        });
     },
 
     // Add new transaction
     addTransaction() {
+        if (!auth.currentUser) return;
+
         const type = document.getElementById('transactionType').value;
         const amount = parseFloat(document.getElementById('transactionForm').elements[1].value);
         const description = document.getElementById('transactionForm').elements[2].value;
@@ -103,6 +114,11 @@ const dashboard = {
         const sortedTransactions = [...transactions].sort((a, b) => 
             new Date(b.date) - new Date(a.date)
         );
+
+        if (sortedTransactions.length === 0) {
+            container.innerHTML = '<p class="no-transactions">No transactions yet. Add your first transaction!</p>';
+            return;
+        }
 
         sortedTransactions.forEach(transaction => {
             const transactionElement = document.createElement('div');
