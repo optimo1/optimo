@@ -22,6 +22,7 @@ body {
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--background-color);
+    padding-top: 60px; /* Add padding for fixed navbar */
 }
 
 /* Navigation */
@@ -86,14 +87,14 @@ body {
 
 /* Hero Section */
 .hero {
-    height: 100vh;
+    min-height: calc(100vh - 60px);
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
-    padding: 0 1rem;
+    padding: 2rem 1rem;
 }
 
 .hero-content {
@@ -127,9 +128,14 @@ body {
 
 /* Dashboard Section */
 .dashboard {
-    padding: 6rem 2rem 2rem;
+    padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    min-height: calc(100vh - 60px);
+}
+
+.dashboard.hidden {
+    display: none;
 }
 
 .dashboard-grid {
@@ -170,6 +176,44 @@ body {
 
 .add-btn:hover {
     background-color: var(--secondary-color);
+}
+
+/* Transactions List */
+.transactions {
+    background-color: var(--card-background);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.transaction {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.transaction:last-child {
+    border-bottom: none;
+}
+
+.transaction.income .amount {
+    color: var(--success-color);
+}
+
+.transaction.expense .amount {
+    color: var(--error-color);
+}
+
+.transaction-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.transaction .date {
+    font-size: 0.875rem;
+    color: var(--light-text);
 }
 
 /* Learning Section */
@@ -345,6 +389,6 @@ footer {
     }
 
     .dashboard {
-        padding-top: 8rem;
+        padding: 1rem;
     }
 } 
